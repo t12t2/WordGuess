@@ -79,11 +79,10 @@
 				1D1A1B462C9B8BF000000001 /* Views */,
 				1D1A1B472C9B8BF700000001 /* Models */,
 				1D1A1B482C9B8BFE00000001 /* Analytics */,
-				1D1A1B2D2C9B8B8A00000001 /* Assets.xcassets */,
-				1D1A1B2F2C9B8B8A00000001 /* Preview Content */,
-			);
-			path = WordGuess;
-			sourceTree = "<group>";
+			1D1A1B2D2C9B8B8A00000001 /* Assets.xcassets */,
+			1D1A1B2F2C9B8B8A00000001 /* Preview Content */,
+		);
+		sourceTree = "<group>";
 		};
 		1D1A1B2F2C9B8B8A00000001 /* Preview Content */ = {
 			isa = PBXGroup;
