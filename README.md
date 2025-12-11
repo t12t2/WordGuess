@@ -53,14 +53,16 @@ A fun word guessing game built with SwiftUI featuring adorable cat drawings, pro
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/WordGuess.git
+   git clone https://github.com/t12t2/WordGuess.git
    cd WordGuess
    ```
 
 2. **Open in Xcode**:
    ```bash
-   open ../WordGuess.xcodeproj
+   open WordGuess.xcodeproj
    ```
+   
+   Or simply double-click `WordGuess.xcodeproj` in Finder
 
 3. **Configure Amplitude Analytics** (Required for full functionality):
 
@@ -117,6 +119,51 @@ A fun word guessing game built with SwiftUI featuring adorable cat drawings, pro
    **📝 Note**: If you skip this step, the app will crash on launch. To run without Amplitude:
    - Comment out Amplitude initialization code in `AnalyticsManager.swift`
    - Or use dummy values (analytics won't work but app will run)
+
+   **Step 3f: Set Up Guides & Surveys Preview (Optional but Recommended)**
+   
+   To preview Amplitude Guides and Surveys directly in your app, you need to add your project's unique URL scheme:
+   
+   **Find Your URL Scheme:**
+   1. Go to [Amplitude Settings → Projects](https://amplitude.com)
+   2. Select your project
+   3. Click the **General** tab
+   4. Find the **URL scheme (mobile)** field
+   5. Copy the value (format: `amp-YOUR_PROJECT_ID`)
+   6. Example: `amp-b6f1505eaa6344e4`
+   
+   **Add to Info.plist:**
+   
+   Open `Info.plist` in Xcode and find the Amplitude URL schemes section:
+   ```xml
+   <!-- Look for this section in Info.plist: -->
+   <dict>
+       <key>CFBundleURLName</key>
+       <string>com.example.WordGuess.amplitude</string>
+       <key>CFBundleURLSchemes</key>
+       <array>
+           <string>amplitude-your_actual_api_key_here</string>
+           <string>amp-PROJECT_ID</string>  ← Replace this!
+       </array>
+   </dict>
+   
+   <!-- Replace amp-PROJECT_ID with your actual URL scheme: -->
+   <string>amp-b6f1505eaa6344e4</string>
+   ```
+   
+   **Why this matters:**
+   - Enables preview mode for testing Guides and Surveys before going live
+   - Allows you to see surveys in your app using preview links from Amplitude dashboard
+   - Makes it easier to iterate on copy, targeting rules, and trigger logic
+   
+   **How to preview:**
+   1. Create a survey or guide in Amplitude dashboard
+   2. Click the **Preview** button
+   3. Copy the preview URL (will start with your URL scheme)
+   4. Open the URL on your simulator/device (or use: `xcrun simctl openurl booted "YOUR_PREVIEW_URL"`)
+   5. The guide/survey will appear in your app!
+   
+   For more details, see [Amplitude's Preview Documentation](https://amplitude.com/docs/guides-and-surveys/guides-and-surveys-ios-sdk#simulate-guides-and-surveys-for-preview).
 
 4. **Build and Run**:
    - Select a simulator or connected iOS device
@@ -222,12 +269,37 @@ xcrun simctl openurl booted "wordguess://game/new"
 xcrun simctl openurl booted "wordguess://leaderboard"
 ```
 
-### Testing Amplitude Preview
+### Testing Amplitude Guides & Surveys Preview
 
-Test surveys and guides:
-```bash
-xcrun simctl openurl booted "amplitude-YOUR_API_KEY://preview?surveyId=YOUR_ID"
-```
+To test Guides and Surveys in your app before publishing:
+
+**Prerequisites:**
+- You've completed Step 3f (added your project's URL scheme to Info.plist)
+- You have a guide or survey created in your Amplitude dashboard
+
+**Method 1: From Amplitude Dashboard**
+1. In Amplitude, go to your guide or survey
+2. Click the **Preview** button
+3. Copy the preview URL (format: `amp-YOUR_PROJECT_ID://preview?...`)
+4. Use Terminal to open it in your simulator:
+   ```bash
+   xcrun simctl openurl booted "amp-YOUR_PROJECT_ID://preview?surveyId=YOUR_SURVEY_ID"
+   ```
+   Replace `YOUR_PROJECT_ID` with your actual project ID (e.g., `amp-b6f1505eaa6344e4`)
+
+**Method 2: On Physical Device**
+1. Email yourself the preview URL from Amplitude dashboard
+2. Open the email on your iOS device
+3. Tap the preview link
+4. Your app will open with the guide/survey displayed!
+
+**What You'll See:**
+- The guide or survey appears immediately in your app
+- Ignores targeting rules (shows regardless of conditions)
+- Perfect for testing copy, design, and user flow
+- Responses are marked as "Preview" in Amplitude
+
+For more information, see the [Amplitude Preview Documentation](https://amplitude.com/docs/guides-and-surveys/guides-and-surveys-ios-sdk#simulate-guides-and-surveys-for-preview).
 
 ## 🐛 Troubleshooting
 
