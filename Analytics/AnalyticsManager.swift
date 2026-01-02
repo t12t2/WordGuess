@@ -148,6 +148,30 @@ class AnalyticsManager: ObservableObject {
         bootGuidesAndSurveys(userId: userId)
     }
     
+    /// Formats a name into a valid userId: removes spaces, keeps only alphanumeric characters,
+    /// and ensures minimum 5 characters by adding random numbers if needed.
+    func formatAsUserId(_ name: String) -> String {
+        // Remove spaces and keep only alphanumeric characters
+        let alphanumericOnly = name.filter { $0.isLetter || $0.isNumber }
+        
+        var userId = alphanumericOnly
+        
+        // Add random numbers if less than 5 characters
+        while userId.count < 5 {
+            let randomDigit = Int.random(in: 0...9)
+            userId.append(String(randomDigit))
+        }
+        
+        return userId
+    }
+    
+    /// Sets userId from a name, automatically formatting it to be valid
+    func setUserIdFromName(_ name: String) {
+        let formattedUserId = formatAsUserId(name)
+        print("📱 Setting userId: '\(formattedUserId)' (from name: '\(name)')")
+        setUserId(formattedUserId)
+    }
+    
     func resetDeviceId() {
         let newDeviceId = UUID().uuidString
         amplitude.setDeviceId(deviceId: newDeviceId)

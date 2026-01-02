@@ -45,6 +45,9 @@ struct WordGuessApp: App {
                     Text(urlRouter.alertMessage)
                 }
                 .onAppear {
+                    // Reset userId to null on each app open
+                    analytics.setUserId(nil)
+                    
                     // Print URL testing instructions on app launch
                     URLRouter.printTestingInstructions()
                 }

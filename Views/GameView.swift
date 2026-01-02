@@ -252,7 +252,7 @@ struct GameView: View {
             TextField("Enter your name", text: $winnerName)
             Button("Save Score") {
                 if !winnerName.isEmpty {
-                    analytics.setUserId(winnerName)
+                    analytics.setUserIdFromName(winnerName)
                     let finalScore = max(0, game.score)
                     leaderboard.addScore(name: winnerName, score: finalScore, word: game.currentWord, guesses: game.guessCount)
                 }

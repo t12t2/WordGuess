@@ -4,6 +4,7 @@ struct LeaderboardView: View {
     @ObservedObject var leaderboard: LeaderboardModel
     let onStartNewGame: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var analytics: AnalyticsManager
     
     var body: some View {
         NavigationView {
@@ -81,6 +82,7 @@ struct LeaderboardView: View {
                 // Action buttons
                 VStack(spacing: 15) {
                     Button("Start New Game") {
+                        analytics.setUserId(nil)
                         onStartNewGame()
                     }
                     .font(.title2)
@@ -91,6 +93,7 @@ struct LeaderboardView: View {
                     .cornerRadius(10)
                     
                     Button("Close") {
+                        analytics.setUserId(nil)
                         dismiss()
                     }
                     .font(.title3)
